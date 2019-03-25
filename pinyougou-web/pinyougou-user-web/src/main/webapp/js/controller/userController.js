@@ -29,6 +29,28 @@ app.controller('userController', function($scope, $timeout, baseService){
     };
 
 
+    //密码设置(修改)
+    $scope.update = function () {
+        // 判断密码是否一致
+        if ($scope.confirm_password && $scope.user.password == $scope.confirm_password){
+            // 发送异步请求
+            baseService.sendPost("/user/update",
+                $scope.user).then(function(response){
+                // 获取响应数据
+                if (response.data){
+                    // 跳转到首页
+                    // 清空表单数据
+                    $scope.user = {};
+                    $scope.confirm_password = "";
+                    //$scope.code = "";
+                }else{
+                    alert("设置失败！");
+                }
+            });
+        }else{
+            alert("两次密码不一致！");
+        }
+    };
 
 
     // 定义显示文本

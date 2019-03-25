@@ -13,7 +13,7 @@ public interface UserService {
 	/** 添加方法 */
 	void save(User user);
 
-	/** 修改方法 */
+	/** 密码设置 */
 	void update(User user);
 
 	/** 根据主键id删除 */

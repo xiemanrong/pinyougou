@@ -35,6 +35,23 @@ public class UserController {
         return false;
     }
 
+    /** 密码设置 */
+    @PostMapping("/update")
+    public boolean update(@RequestBody User user){
+        try{
+            userService.update(user);
+            return true;
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+
+
+
+
+
     /** 发送短信验证码 */
     @GetMapping("/sendSmsCode")
     public boolean sendSmsCode(String phone){
