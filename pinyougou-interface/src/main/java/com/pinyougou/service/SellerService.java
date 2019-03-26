@@ -34,4 +34,17 @@ public interface SellerService {
 
 	/** 修改商家的审核状态 */
 	void updateStatus(String sellerId, String status);
+
+	/**
+	 * 查询商家状态
+	 * @param username
+	 * @return
+	 */
+	String findStatusByUsername(String username);
+
+	/**
+	 * 修改商家密码
+	 * @param seller
+	 */
+	void updatePassword(Seller seller);
 }

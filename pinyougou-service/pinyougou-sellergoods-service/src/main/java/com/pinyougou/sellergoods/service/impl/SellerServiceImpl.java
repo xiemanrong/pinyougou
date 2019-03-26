@@ -10,6 +10,7 @@ import com.pinyougou.pojo.Seller;
 import com.pinyougou.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -42,8 +43,47 @@ public class SellerServiceImpl implements SellerService {
         }
     }
 
+    /**
+     * 修改商家密码
+     * @param seller
+     */
+    @Override
+    public void updatePassword(Seller seller) {
+        try{
+            sellerMapper.updatePassById(seller);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * 修改商家信息
+     * @param seller
+     */
     @Override
     public void update(Seller seller) {
+        try{
+            Seller seller1 = sellerMapper.selectByPrimaryKey(seller.getSellerId());
+            seller1.setName(seller.getName());
+            seller1.setMobile(seller.getMobile());
+            seller1.setTelephone(seller.getTelephone());
+            seller1.setAddressDetail(seller.getAddressDetail());
+            seller1.setLinkmanName(seller.getLinkmanName());
+            seller1.setLinkmanQq(seller.getLinkmanQq());
+            seller1.setLinkmanMobile(seller.getLinkmanMobile());
+            seller1.setLinkmanEmail(seller.getLinkmanEmail());
+            seller1.setLicenseNumber(seller.getLicenseNumber());
+            seller1.setTaxNumber(seller.getTaxNumber());
+            seller1.setOrgNumber(seller.getOrgNumber());
+            seller1.setLegalPerson(seller.getLegalPerson());
+            seller1.setLegalPersonCardId(seller.getLegalPersonCardId());
+            seller1.setBankName(seller.getBankName());
+            seller1.setBankUser(seller.getBankUser());
+            sellerMapper.deleteByPrimaryKey(seller1.getSellerId());
+            sellerMapper.insertSelective(seller1);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
@@ -89,5 +129,15 @@ public class SellerServiceImpl implements SellerService {
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }
+    }
+
+    /**
+     * 查询商家状态
+     * @param username
+     * @return
+     */
+    @Override
+    public String findStatusByUsername(String username) {
+        return sellerMapper.findStatusByUsername(username);
     }
 }
