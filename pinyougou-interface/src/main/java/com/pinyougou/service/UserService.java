@@ -13,8 +13,6 @@ public interface UserService {
 	/** 添加方法 */
 	void save(User user);
 
-	/** 修改方法 */
-	void update(User user);
 
 	/** 根据主键id删除 */
 	void delete(Serializable id);
@@ -36,4 +34,7 @@ public interface UserService {
 
 	/** 检验短信验证码 */
 	boolean checkSmsCode(String phone, String code);
+
+    /** 重置密码 */
+    void update(User user);
 }

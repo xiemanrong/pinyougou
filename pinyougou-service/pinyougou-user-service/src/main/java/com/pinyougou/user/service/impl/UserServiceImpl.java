@@ -54,10 +54,29 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public void update(User user) {
+    /** 密码设置 */
+   public void update(User user) {
 
-    }
+
+       try {
+           //密码需要MD5加密
+           user.setPassword(DigestUtils.md5Hex(user.getPassword()));
+           user.setUsername(user.getUsername());
+           user.setId((long) 16);
+           //创建时间
+           user.setCreated(new Date());
+           //修改时间
+           user.setUpdated(user.getCreated());
+
+           userMapper.updateByPrimaryKey(user);
+       } catch (Exception ex) {
+           throw new RuntimeException(ex);
+       }
+
+   }
+
+
+
 
     @Override
     public void delete(Serializable id) {
@@ -128,5 +147,23 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(ex);
         }
     }
+
+
+//    /** 重置密码 */
+//    public void updatePassword(User user){
+//
+//        try {
+//            //密码需要MD5加密
+//            user.setUsername(user.getUsername());
+//            user.setPassword(DigestUtils.md5Hex(user.getPassword()));
+//            userMapper.updateByPrimaryKeySelective(user);
+//
+//
+//        } catch (Exception ex){
+//            throw new RuntimeException(ex);
+//        }
+//
+//
+//    }
 
 }

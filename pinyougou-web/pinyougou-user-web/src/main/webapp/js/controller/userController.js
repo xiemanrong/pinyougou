@@ -28,7 +28,39 @@ app.controller('userController', function($scope, $timeout, baseService){
         }
     };
 
+    // 获取登录用户名
+    $scope.showName = function () {
+        baseService.sendGet("/user/showName").then(function (response) {
+            // 获取响应数据
+            $scope.loginName = response.data.loginName;
+        });
+    };
 
+
+    //密码设置(修改)
+    $scope.update = function () {
+        // 判断密码是否一致
+        if ($scope.confirm_password && $scope.user.password == $scope.confirm_password){
+            // 发送异步请求
+            baseService.sendPost("/user/update",
+                $scope.user).then(function(response){
+                // 获取响应数据
+                if (response.data){
+                    // 跳转到首页
+                    // 清空表单数据
+                    $scope.user = {};
+                    $scope.user.username = "";
+                    $scope.confirm_password = "";
+                    alert("设置成功!")
+                    //$scope.code = "";
+                }else{
+                    alert("设置失败！");
+                }
+            });
+        }else{
+            alert("两次密码不一致！");
+        }
+    };
 
 
     // 定义显示文本
