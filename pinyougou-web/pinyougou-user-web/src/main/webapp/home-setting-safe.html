@@ -13,9 +13,10 @@
     <script src="/js/controller/userController.js"></script>
 
 
+
 </head>
 <!--绑定事件-->
-<body ng-app="pinyougou" ng-controller="userController">
+<body ng-app="pinyougou" ng-controller="userController" ng-init="showName()">
 <!-- 头部栏位 -->
 <!--页面顶部-->
 <div id="nav-bottom">
@@ -24,12 +25,9 @@
         <div class="top">
             <div class="py-container">
                 <div class="shortcut">
-                    <ul class="fl">
-                        <li class="f-item">品优购欢迎您！</li>
-                        <li class="f-item">请<a href="login.html" target="_blank">登录</a>　<span><a href="register.html"
-                                                                                                 target="_blank">免费注册</a></span>
-                        </li>
-                    </ul>
+                        <ul class="fl">
+                            <li class="f-item">{{loginName}}，品优购欢迎您！</li>
+                        </ul>
                     <ul class="fr">
                         <li class="f-item">我的订单</li>
                         <li class="f-item space"></li>
@@ -290,8 +288,8 @@
                 <div class="person-info">
                     <div class="person-photo"><img src="img/_/photo.png" alt=""></div>
                     <div class="person-account">
-                        <span class="name">Michelle</span>
-                        <span class="safe">账户安全</span>
+                        <span class="name">{{loginName}}</span>
+                        <span class="safe"><a href="/logout">退出登录 </a></span>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -413,15 +411,20 @@
                                     <label  class="control-label">验证方式：</label>
                                     <div class="controls fixed">手机验证（138****9856）</div>
                                 </div>
+
+
                                 <div class="control-group">
                                     <label for="inputcode" class="control-label">验证码：</label>
                                     <div class="controls">
                                         <input name="inputcode" type="text" id="inputcode">
                                     </div>
-                                    <div class="controls">
-                                        验证码
-                                    </div>
+                                    <td>
+                                        <img src="/verify"/>
+                                    </td>
                                 </div>
+
+
+
                                 <div class="control-group">
                                     <label  class="control-label">短信验证码：</label>
                                     <div class="controls">

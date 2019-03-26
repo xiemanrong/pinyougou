@@ -40,16 +40,13 @@ public class UserController {
     public boolean update(@RequestBody User user){
         try{
             userService.update(user);
+
             return true;
         }catch (Exception ex){
             ex.printStackTrace();
         }
         return false;
     }
-
-
-
-
 
 
     /** 发送短信验证码 */

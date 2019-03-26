@@ -28,6 +28,14 @@ app.controller('userController', function($scope, $timeout, baseService){
         }
     };
 
+    // 获取登录用户名
+    $scope.showName = function () {
+        baseService.sendGet("/user/showName").then(function (response) {
+            // 获取响应数据
+            $scope.loginName = response.data.loginName;
+        });
+    };
+
 
     //密码设置(修改)
     $scope.update = function () {
@@ -41,7 +49,9 @@ app.controller('userController', function($scope, $timeout, baseService){
                     // 跳转到首页
                     // 清空表单数据
                     $scope.user = {};
+                    $scope.user.username = "";
                     $scope.confirm_password = "";
+                    alert("设置成功!")
                     //$scope.code = "";
                 }else{
                     alert("设置失败！");
