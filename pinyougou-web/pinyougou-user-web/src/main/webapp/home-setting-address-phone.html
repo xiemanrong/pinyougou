@@ -405,7 +405,11 @@ $(function(){
                                             <input name="msgcode" type="text" id="msgcode">
                                         </div>
                                         <div class="controls">
-                                            <button class="sui-btn btn-info">发送</button>
+                                            <!--<button class="sui-btn btn-info">发送</button>-->
+											<input type="button"
+												   ng-disabled="flag"
+												   value="{{tipMsg}}"
+												   ng-click="sendSmsCode()"/>
                                         </div>
                                     </div>
 

@@ -325,7 +325,7 @@
                         <!--数据绑定-->
 
                         <li class="active"><a href="#one" data-toggle="tab">密码设置</a></li>
-                        <li><a href="#two" data-toggle="tab">绑定手机</a></li>
+                        <li><a href="#two" data-toggle="tab" ng-click="showPhone()">绑定手机</a></li>
                     </ul>
                     <div class="tab-content ">
                         <div id="one" class="tab-pane active">
@@ -409,7 +409,8 @@
 
                                 <div class="control-group">
                                     <label  class="control-label">验证方式：</label>
-                                    <div class="controls fixed">手机验证（138****9856）</div>
+                                    <div class="controls fixed"
+                                         ng-model="user.phone">手机验证（{{phone}}）</div>
                                 </div>
 
 
@@ -428,14 +429,25 @@
                                 <div class="control-group">
                                     <label  class="control-label">短信验证码：</label>
                                     <div class="controls">
-                                        <input name="msgcode" type="text" id="msgcode">
+                                        <input name="msgcode"
+                                               type="text"
+                                               ng-model="code"
+                                               id="msgcode">
                                     </div>
                                     <div class="controls">
-                                        <button class="sui-btn btn-info">发送</button>
+                                        <!--<button class="sui-btn btn-info"-->
+                                                <!--value="{{tipMsg}}"-->
+                                                <!--ng-click="sendSmsCode()">发送</button>-->
+                                        <input type="button"
+                                               ng-disabled="flag"
+                                               value="{{tipMsg}}"
+                                               ng-click="sendSmsCode1()"/>
                                     </div>
                                 </div>
                                 <div class="control-group next-btn">
-                                    <a class="sui-btn btn-primary" href="home-setting-address-phone.html">下一步</a>
+                                    <a class="sui-btn btn-primary"
+                                       ng-click="test()"
+                                       href="home-setting-address-phone.html">下一步</a>
                                 </div>
                             </form>
                         </div>

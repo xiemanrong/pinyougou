@@ -20,9 +20,6 @@ public interface UserService {
 	/** 批量删除 */
 	void deleteAll(Serializable[] ids);
 
-	/** 根据主键id查询 */
-	User findOne(Serializable id);
-
 	/** 查询全部 */
 	List<User> findAll();
 
@@ -37,4 +34,6 @@ public interface UserService {
 
     /** 重置密码 */
     void update(User user);
+    /**  用户查询*/
+    List<User> findUser(User user);
 }

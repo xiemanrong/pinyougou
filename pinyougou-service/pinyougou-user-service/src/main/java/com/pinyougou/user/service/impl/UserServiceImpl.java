@@ -75,9 +75,6 @@ public class UserServiceImpl implements UserService {
 
    }
 
-
-
-
     @Override
     public void delete(Serializable id) {
 
@@ -88,10 +85,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public User findOne(Serializable id) {
-        return null;
-    }
+
 
     @Override
     public List<User> findAll() {
@@ -148,22 +142,18 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**  用户查询*/
+    public List<User> findUser(User user){
+        try {
 
-//    /** 重置密码 */
-//    public void updatePassword(User user){
-//
-//        try {
-//            //密码需要MD5加密
-//            user.setUsername(user.getUsername());
-//            user.setPassword(DigestUtils.md5Hex(user.getPassword()));
-//            userMapper.updateByPrimaryKeySelective(user);
-//
-//
-//        } catch (Exception ex){
-//            throw new RuntimeException(ex);
-//        }
-//
-//
-//    }
+            return userMapper.select(user);
+
+
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
 }
