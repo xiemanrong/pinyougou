@@ -19,10 +19,6 @@ import java.util.Map;
 
 /**
  * 登录控制器
- *
- * @author lee.siu.wah
- * @version 1.0
- * <p>File Created at 2019-03-03<p>
  */
 @Controller
 public class LoginController {

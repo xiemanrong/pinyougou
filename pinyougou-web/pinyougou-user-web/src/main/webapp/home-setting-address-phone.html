@@ -15,7 +15,7 @@
 
 
 </head>
-<body ng-app="pinyougou" ng-controller="userController">
+<body ng-app="pinyougou" ng-controller="userController" ng-init="showName()">
     <!-- 头部栏位 -->
     <!--页面顶部-->
 <div id="nav-bottom">
@@ -25,8 +25,7 @@
 			<div class="py-container">
 				<div class="shortcut">
 					<ul class="fl">
-						<li class="f-item">品优购欢迎您！</li>
-						<li class="f-item">请<a href="login.html" target="_blank">登录</a>　<span><a href="register.html" target="_blank">免费注册</a></span></li>
+						<li class="f-item">{{loginName}}，品优购欢迎您！</li>
 					</ul>
 					<ul class="fr">
 						<li class="f-item">我的订单</li>
@@ -288,8 +287,8 @@ $(function(){
                     <div class="person-info">
                         <div class="person-photo"><img src="img/_/photo.png" alt=""></div>
                         <div class="person-account">
-                            <span class="name">Michelle</span>
-                            <span class="safe">账户安全</span>
+							<span class="name">{{loginName}}</span>
+							<span class="safe"><a href="/logout">退出登录 </a></span>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -390,28 +389,36 @@ $(function(){
 												   id="inputphone" placeholder="请输入新手机号">
                                         </div>                            
                                     </div>
-                                     <div class="control-group">
-                                        <label for="inputcode" class="control-label">验证码：</label>
-                                        <div class="controls">
-                                            <input name="inputcode" type="text" id="inputcode">
-                                        </div>
-                                        <div class="controls">
-                                            验证码
-                                        </div>
-                                    </div>
-                                    <div class="control-group">
+
+									<div class="control-group">
+										<label for="inputcode" class="control-label">验证码：</label>
+										<div class="controls">
+											<input name="inputcode" type="text" id="inputcode">
+										</div>
+										<td>
+											<img src="/verify"/>
+										</td>
+									</div>
+
+									<div class="control-group">
                                         <label  class="control-label">短信验证码：</label>
                                         <div class="controls">
-                                            <input name="msgcode" type="text" id="msgcode">
+                                            <input ng-model="code" name="msgcode" type="text" id="msgcode">
                                         </div>
                                         <div class="controls">
-                                            <button class="sui-btn btn-info">发送</button>
+                                            <!--<button class="sui-btn btn-info">发送</button>-->
+											<input type="button"
+												   ng-disabled="flag"
+												   value="{{tipMsg}}"
+												   ng-click="sendSmsCode()"/>
                                         </div>
                                     </div>
 
                                     <div class="control-group next-btn">
                                         <a class="sui-btn btn-primary" href="home-setting-safe.html">上一步</a>&nbsp;
-                                        <a class="sui-btn btn-primary" type="submit" href="home-setting-address-complete.html">下一步</a>
+                                        <a class="sui-btn btn-primary" type="submit"
+										   ng-click="updatePhone()"
+										   href="javascript:;">下一步</a>
                                     </div>
                                 </form>
                             </div>
