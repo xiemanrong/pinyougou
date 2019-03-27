@@ -23,7 +23,6 @@ public interface UserMapper extends Mapper<User>{
 //    public User userinfor(@Param("username") String username);
 
     //用户信息的更新操作
-//    void updatePassword(@Param("id")Long id,
-//                        @Param("username") String username,
-//                        @Param("password") String password);
+    void updatePhone(@Param("username") String username,
+                     @Param("phone") String phone);
 }

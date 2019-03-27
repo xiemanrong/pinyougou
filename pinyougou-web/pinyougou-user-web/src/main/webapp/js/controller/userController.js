@@ -30,38 +30,6 @@ app.controller('userController', function($scope, $timeout, baseService){
 
     };
 
-    // 判断验证码和短信验证码
-    $scope.test = function () {
-
-        // 判断密码是否一致
-        if ($scope.okPassword && $scope.user.password == $scope.okPassword) {
-            // 发送异步请求
-            baseService.sendPost("/user/save?code=" + $scope.code,
-                $scope.user).then(function (response) {
-                // 获取响应数据
-                if (response.data) {
-                    // 跳转到登录页面
-                    // 清空表单数据
-                    $scope.user = {};
-                    $scope.okPassword = "";
-                    $scope.code = "";
-                } else {
-                    alert("注册失败！");
-                }
-            });
-        } else {
-            alert("两次密码不一致！");
-
-        }
-
-    };
-
-
-
-
-
-
-
             // 获取登录用户名
             $scope.showName = function () {
                 baseService.sendGet("/user/showName").then(function (response) {
@@ -136,6 +104,57 @@ app.controller('userController', function($scope, $timeout, baseService){
                     alert("两次密码不一致！");
                 }
             };
+
+
+    // 更改手机号码
+    $scope.updatePhone = function () {
+
+        // 发送异步请求
+        baseService.sendPost("/user/updatePhone?code=" + $scope.code,
+            $scope.user).then(function (response) {
+
+            // 获取响应数据
+            if (response.data) {
+                // 跳转到登录页面
+                // 清空表单数据
+                $scope.user = {};
+
+                $scope.code = "";
+                location.href = "/home-setting-address-complete.html"
+            } else {
+                alert("绑定失败！");
+            }
+        });
+    }
+
+        // 第一步的短信校验
+        $scope.testCode = function () {
+
+            // 发送异步请求
+            baseService.sendPost("/user/testCode?code="+ $scope.code + "&phone=" +$scope.phone).then(function (response) {
+
+                // 获取响应数据
+                if (response.data) {
+                    // 跳转到登录页面
+                    // 清空表单数据
+                    $scope.user = {};
+
+                    $scope.code = "";
+                    location.href = "/home-setting-address-phone.html"
+                } else {
+                    alert("验证码有误！");
+                }
+            });
+    };
+
+
+
+
+
+
+
+
+
 
 
             // 定义显示文本

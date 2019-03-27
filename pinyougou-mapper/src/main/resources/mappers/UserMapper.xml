@@ -5,11 +5,8 @@
 
 <mapper namespace="com.pinyougou.mapper.UserMapper">
 
-	<!--<update id="updatePassword">-->
-		<!--UPDATE `tb_user` SET ${columnName} = #{username} WHERE id IN-->
-		<!--<foreach collection="ids" item="id" open="(" separator="," close=")">-->
-			<!--#{id}-->
-		<!--</foreach>-->
-	<!--</update>-->
+	<update id="updatePhone">
+		UPDATE `tb_user` SET phone = #{phone} where username = #{username}
+	</update>
 
 </mapper>

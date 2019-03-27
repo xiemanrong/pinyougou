@@ -155,5 +155,24 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    //更新手机号码
+    public void updatePhone(String username, String phone){
+        userMapper.updatePhone(username,phone);
+
+    }
+
+    //第一步短信校验
+    public boolean testCode(String phone, String code){
+
+        try{
+            // 从Redis数据库获取短信验证码
+            String oldCode = (String)redisTemplate.boundValueOps(phone).get();
+            return oldCode != null && oldCode.equals(code);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+
+    }
+
 
 }
