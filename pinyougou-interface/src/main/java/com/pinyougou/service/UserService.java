@@ -13,7 +13,6 @@ public interface UserService {
 	/** 添加方法 */
 	void save(User user);
 
-
 	/** 根据主键id删除 */
 	void delete(Serializable id);
 

@@ -69,7 +69,9 @@
 			<h4>全部商品<span>11</span></h4>
 			<div class="cart-main">
 				<div class="yui3-g cart-th">
+					
 					<div class="yui3-u-1-4"><input type="checkbox" ng-click="updateSelectionAll($event);"/> 全部</div>
+					<div class="yui3-u-1-4"><input type="checkbox" name="" value="" /> 全部</div>
 					<div class="yui3-u-1-4">商品</div>
 					<div class="yui3-u-1-8">单价（元）</div>
 					<div class="yui3-u-1-8">数量</div>
@@ -79,6 +81,7 @@
 
 				<div class="cart-item-list" ng-repeat="cart in carts">
 					<div class="cart-shop">
+						
 						<input type="checkbox" name="{{cart.sellerId}}" ng-click="updateSelectionSeller($event, cart);" />
 						<span class="shopname self">{{cart.sellerName}}</span>{{ids}}
 					</div>
@@ -86,6 +89,7 @@
 						<div class="cart-list" ng-repeat="orderItem in cart.orderItems">
 							<ul class="goods-list yui3-g">
 								<li class="yui3-u-1-24">
+								
 									<input type="checkbox" name="{{cart.sellerId}}"
 										   ng-click="updateSelection($event,orderItem.itemId, cart);"/>
 								</li>
@@ -109,8 +113,10 @@
 								</li>
 								<li class="yui3-u-1-8"><span class="sum">{{orderItem.totalFee.toFixed(2)}}</span></li>
 								<li class="yui3-u-1-8">
+									
 									<a href="javascript:;"
 									   ng-click="addCart(orderItem.itemId, -orderItem.num)">删除</a><br />
+									
 									<a href="javascript:;">移到我的关注</a>
 								</li>
 							</ul>
@@ -120,10 +126,12 @@
 			</div>
 			<div class="cart-tool">
 				<div class="select-all">
+					
 					<input type="checkbox" ng-click="updateSelectionAll($event);"/>
 					<span>全选</span>
 				</div>
 				<div class="option">
+					
 					<a href="javascript:;">删除选中的商品</a>
 					<a href="javascript:;">移到我的关注</a>
 					<a href="javascript:;">清除下柜商品</a>
@@ -136,6 +144,7 @@
 						<span><em>已节省：</em><i>-¥20.00</i></span>
 					</div>
 					<div class="sumbtn">
+						
 						<a class="sum-btn" href="javasrcipt:;" ng-click="settle();">结算</a>
 					</div>
 				</div>
@@ -155,6 +164,7 @@
 							<span class="number">1</span>
 						</li>
 						<li class="yui3-u-1-8">
+							
 							<a href="javascript:;">重新购买</a>
 							<a href="javascript:;">移到我的关注</a>
 						</li>

@@ -1,8 +1,10 @@
 package com.pinyougou.mapper;
 
+import com.pinyougou.pojo.Address;
+import org.apache.ibatis.annotations.Delete;
 import tk.mybatis.mapper.common.Mapper;
 
-import com.pinyougou.pojo.Address;
+import java.io.Serializable;
 
 /**
  * AddressMapper 数据访问接口
@@ -11,6 +13,6 @@ import com.pinyougou.pojo.Address;
  */
 public interface AddressMapper extends Mapper<Address>{
 
-
-
+    @Delete("DELETE FROM tb_address WHERE id = #{id}")
+    void deleteById(Serializable id);
 }

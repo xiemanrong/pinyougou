@@ -3,6 +3,7 @@ app.controller('cartController', function ($scope, $location, $controller, baseS
     // 继承baseController
     $controller('baseController', {$scope:$scope});
     
+    
     // 定义ids数组
     $scope.ids = [];
     

@@ -87,7 +87,6 @@
 
     <!-- 构建部分 -->
     <build>
-        <defaultGoal>compile</defaultGoal>
         <plugins>
             <!-- 配置tomcat7插件 -->
             <plugin>
