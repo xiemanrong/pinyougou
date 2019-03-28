@@ -32,6 +32,18 @@ public class addressController {
         return false;
     }
 
+    /** 修改 */
+    @PostMapping("/update")
+    public boolean update(@RequestBody Address address){
+        try{
+            addressService.update(address);
+            return true;
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     /** 删除 */
     @GetMapping("/delete")
     public boolean delete(Long id){

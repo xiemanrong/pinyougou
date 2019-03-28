@@ -7775,8 +7775,13 @@ app.controller('addressController', function($scope,$http,baseService) {
 
     /** 添加 */
     $scope.savems = function(){
+        /** 定义请求URL */
+        var url = "save"; // 添加品牌
+        if ($scope.entity.id){
+            url = "update"; // 修改品牌
+        }
         /** 发送post请求 */
-        baseService.sendPost("/address/save", $scope.entity)
+        baseService.sendPost("/address/" + url, $scope.entity)
             .then(function(response){
                 if (response.data){
                     /** 重新加载数据 */
@@ -7784,6 +7789,26 @@ app.controller('addressController', function($scope,$http,baseService) {
                 }else{
                     alert("操作失败！");
                 }
+            });
+    };
+
+    /** 显示修改 */
+    /** 为修改按钮绑定点击事件 */
+    $scope.show = function(entity){
+        // 把entity的json对象转化成一个新的json对象
+        $scope.entity = JSON.parse(JSON.stringify(entity));
+    };
+
+    $scope.entityy = {};
+
+    /** 修改 */
+    $scope.update = function(){
+        /** 把json对象转化成一个新的json对象 */
+        $scope.entityy = JSON.parse(JSON.stringify(entityy));
+        /** 调用服务层 */
+        baseService.sendPost("/address/update",$scope.entityy)
+            .then(function(response){
+                $scope.findAll();
             });
     };
 

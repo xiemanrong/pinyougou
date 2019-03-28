@@ -36,7 +36,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void update(Address address) {
-
+        addressMapper.updateByPrimaryKeySelective(address);
     }
 
     @Override
