@@ -1,7 +1,5 @@
 package com.pinyougou.shop.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.pinyougou.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,14 +17,16 @@ import java.util.Map;
 
 /**
  * 登录控制器
+ *
+ * @author lee.siu.wah
+ * @version 1.0
+ * <p>File Created at 2019-03-03<p>
  */
 @Controller
 public class LoginController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-    @Reference
-    private SellerService sellerService;
 
     /** 用户登录  get|post */
     @RequestMapping("/login")
@@ -40,9 +40,7 @@ public class LoginController {
         if ("post".equalsIgnoreCase(request.getMethod())) {
             // 判断验证码
             String oldCode = (String) request.getSession().getAttribute(VerifyController.VERIFY_CODE);
-            // 根据用户名获取商家状态，用于判断商家是否有登录权限
-            String status = sellerService.findStatusByUsername(username);
-            if ("1".equals(status) && code != null && !"".equals(code) && code.equalsIgnoreCase(oldCode)) {
+            if (code != null && code.equalsIgnoreCase(oldCode)) {
                 // 创建用户名与密码对象
                 UsernamePasswordAuthenticationToken token =
                         new UsernamePasswordAuthenticationToken(username, password);

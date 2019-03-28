@@ -1,8 +1,5 @@
 package com.pinyougou.user.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.pinyougou.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,18 +18,14 @@ import java.util.Map;
 @RestController
 public class LoginController {
 
-
     /** 获取登录用户名 */
     @GetMapping("/user/showName")
     public Map<String,String> showName(){
         SecurityContext context = SecurityContextHolder.getContext();
         String loginName = context.getAuthentication().getName();
+
         Map<String,String> data = new HashMap<>();
         data.put("loginName", loginName);
-
         return data;
     }
-
-
-
 }

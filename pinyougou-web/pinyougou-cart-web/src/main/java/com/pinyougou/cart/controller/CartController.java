@@ -7,7 +7,10 @@ import com.pinyougou.common.util.CookieUtils;
 import com.pinyougou.service.CartService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +33,6 @@ public class CartController {
     private HttpServletResponse response;
     @Reference(timeout = 10000)
     private CartService cartService;
-
 
     /** 把SKU商品添加到购物车 */
     @GetMapping("/addCart")

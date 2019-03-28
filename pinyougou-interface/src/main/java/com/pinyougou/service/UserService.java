@@ -13,12 +13,17 @@ public interface UserService {
 	/** 添加方法 */
 	void save(User user);
 
+	/** 修改方法 */
+	void update(User user);
 
 	/** 根据主键id删除 */
 	void delete(Serializable id);
 
 	/** 批量删除 */
 	void deleteAll(Serializable[] ids);
+
+	/** 根据主键id查询 */
+	User findOne(Serializable id);
 
 	/** 查询全部 */
 	List<User> findAll();
@@ -31,13 +36,4 @@ public interface UserService {
 
 	/** 检验短信验证码 */
 	boolean checkSmsCode(String phone, String code);
-
-    /** 重置密码 */
-    void update(User user);
-    /**  用户查询*/
-    List<User> findUser(User user);
-	//更新手机号码
-	void updatePhone(String username, String phone);
-    //第一步短信校验
-    boolean testCode(String phone, String code);
 }

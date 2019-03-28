@@ -14,12 +14,8 @@
     <security:http pattern="/js/**" security="none"/>
     <security:http pattern="/plugins/**" security="none"/>
     <security:http pattern="/register.html" security="none"/>
-    <security:http pattern="/home-setting-safe.html" security="none"/>
     <security:http pattern="/user/save" security="none"/>
-    <security:http pattern="/user/update" security="none"/>
     <security:http pattern="/user/sendSmsCode" security="none"/>
-    <security:http pattern="/verify" security="none"/>
-
 
 
     <!-- 配置哪些URL需要拦截

@@ -1,46 +1,7 @@
 // 购物车控制器
-app.controller('cartController', function ($scope, $location, $controller, baseService) {
+app.controller('cartController', function ($scope, $controller, baseService) {
     // 继承baseController
     $controller('baseController', {$scope:$scope});
-
-    // 定义ids数组
-    $scope.ids = [];
-
-    // 为checkbox绑定点击事件封装用户选中的id
-    $scope.updateSelection = function($event, id){
-        // $event事件对象 (判断checkbox是否选中)
-        //alert($event.target); // 获取dom元素
-        if ($event.target.checked){
-            // 选中了checkbox
-            // 往数组中添加元素
-            $scope.ids.push(id);
-        }else{
-            // 没有选中checkbox
-            // 从数据中删除元素
-            // 获取一个元素在数组中的索引号
-            var idx = $scope.ids.indexOf(id);
-            // 删除元素
-            // 第一个参数：索引号
-            // 第二个参数：删除的个数
-            $scope.ids.splice(idx,1);
-        }
-    };
-
-
-    $scope.updateSelectionAll = function($event, orderItems){
-        var element = $event.target;
-
-        for (var i = 0; i < orderItems.length; i++) {
-            if ($event.target.checked){
-
-                $scope.ids.push(orderItems[i].itemId);
-            }else{
-
-                var idx = $scope.ids.indexOf(orderItems[i].itemId);
-                $scope.ids.splice(idx,1);
-            }
-        }
-    };
 
     // 查询用户的购物车
     $scope.findCart = function () {

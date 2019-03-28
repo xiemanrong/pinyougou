@@ -5,8 +5,4 @@
 
 <mapper namespace="com.pinyougou.mapper.UserMapper">
 
-	<update id="updatePhone">
-		UPDATE `tb_user` SET phone = #{phone} where username = #{username}
-	</update>
-
 </mapper>
