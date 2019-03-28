@@ -2,18 +2,40 @@
 app.controller('cartController', function ($scope, $location, $controller, baseService) {
     // 继承baseController
     $controller('baseController', {$scope:$scope});
-
+    
     // 定义ids数组
     $scope.ids = [];
+    
+    $scope.settle = function () {
+        var ids = $scope.ids.join(",");
+        window.open("/order/getOrderInfo.html?ids=" + ids);
+    };
+    
 
-    // 为checkbox绑定点击事件封装用户选中的id
-    $scope.updateSelection = function($event, id){
+    /**
+     * 选中商品
+     */
+    $scope.updateSelection = function($event, id, cart){
+        var sellerId = cart.sellerId;
+        var orderItems = cart.orderItems;
         // $event事件对象 (判断checkbox是否选中)
         //alert($event.target); // 获取dom元素
-        if ($event.target.checked){
-            // 选中了checkbox
-            // 往数组中添加元素
-            $scope.ids.push(id);
+        if ($event.target.checked){ // 选中了checkbox
+            if (cart.orderItems.length == $("input[name="+sellerId+"]:checked").length) {
+                $(".cart-shop input[name=" + sellerId + "]").prop("checked", true);
+            }
+            for (var i = 0; i < orderItems.length; i++) {
+                if (orderItems[i].itemId == id && $scope.ids.indexOf(id) == -1) {
+                    // 往数组中添加元素
+                    $scope.ids.push(id);
+                    $scope.totalEntity.totalNum += orderItems[i].num;
+                    $scope.totalEntity.totalMoney += orderItems[i].totalFee;
+                }
+            }
+            if ($scope.ids.length == $(".goods-list input:checkbox").length) {
+                $(".cart-main .yui3-u-1-4 input:checkbox").prop("checked", true);
+                $(".cart-tool .select-all input:checkbox").prop("checked", true);
+            }
         }else{
             // 没有选中checkbox
             // 从数据中删除元素
@@ -23,21 +45,52 @@ app.controller('cartController', function ($scope, $location, $controller, baseS
             // 第一个参数：索引号
             // 第二个参数：删除的个数
             $scope.ids.splice(idx,1);
+            $(this).prop("checked", false);
+            $(".cart-shop input[name=" + sellerId + "]").prop("checked", false);
+            $(".cart-main .yui3-u-1-4 input:checkbox").prop("checked", false);
+            $(".cart-tool .select-all input:checkbox").prop("checked", false);
+            for (var i = 0; i < orderItems.length; i++) {
+                if (orderItems[i].itemId == id) {
+                    $scope.totalEntity.totalNum -= orderItems[i].num;
+                    $scope.totalEntity.totalMoney -= orderItems[i].totalFee;
+                }
+            }
         }
     };
 
+    /**
+     * 选中商家
+     */
+    $scope.updateSelectionSeller = function($event, cart){
+        var orderItems = cart.orderItems;
+        var sellerId = cart.sellerId;
 
-    $scope.updateSelectionAll = function($event, orderItems){
-        var element = $event.target;
+        if ($event.target.checked){
+            $("input[name="+sellerId+"]").prop("checked", true);
+            for (var i = 0; i < orderItems.length; i++) {
+                $scope.updateSelection($event, orderItems[i].itemId, cart);
+            }
+        }else{
+            for (var i = 0; i < orderItems.length; i++) {
+                $scope.updateSelection($event, orderItems[i].itemId, cart);
+                $("input[name="+sellerId+"]").prop("checked", false);
+            }
+        }
+    };
 
-        for (var i = 0; i < orderItems.length; i++) {
-            if ($event.target.checked){
-
-                $scope.ids.push(orderItems[i].itemId);
-            }else{
-
-                var idx = $scope.ids.indexOf(orderItems[i].itemId);
-                $scope.ids.splice(idx,1);
+    /**
+     * 全选
+     */
+    $scope.updateSelectionAll = function ($event) {
+        // 循环用户的购物车数组
+        for (var i = 0; i < $scope.carts.length; i++){
+            // 获取数组中的元素(一个商家的购物车)
+            var cart = $scope.carts[i];
+            $scope.updateSelectionSeller($event, cart, i);
+            if ($event.target.checked) {
+                $("input[type=checkbox]").prop("checked", true);
+            } else {
+                $("input[type=checkbox]").prop("checked", false);
             }
         }
     };
@@ -51,6 +104,7 @@ app.controller('cartController', function ($scope, $location, $controller, baseS
             // 定义json对象封装统计的结果
             $scope.totalEntity = {totalNum : 0, totalMoney : 0};
 
+            /**
             // 循环用户的购物车数组
             for (var i = 0; i < $scope.carts.length; i++){
                 // 获取数组中的元素(一个商家的购物车)
@@ -66,6 +120,7 @@ app.controller('cartController', function ($scope, $location, $controller, baseS
                     $scope.totalEntity.totalMoney += orderItem.totalFee;
                 }
             }
+             */
         });
     };
 
@@ -77,6 +132,7 @@ app.controller('cartController', function ($scope, $location, $controller, baseS
             if (response.data){
                 // 重新加载购物车数据
                 $scope.findCart();
+                $scope.ids = [];
             }
         });
     };

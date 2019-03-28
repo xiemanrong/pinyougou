@@ -28,11 +28,18 @@ public interface CartService {
     List<Cart> findCartRedis(String userId);
 
     /**
-     * 把用户的购物车存储到Redis数据库
+     * 把用户未选中的购物车数据重新存储到Redis
      * @param userId 用户id
      * @param carts 购物车集合
      */
     void saveCartRedis(String userId, List<Cart> carts);
+
+    /**
+     * 把用户选中的购物车数据重新存储到Redis
+     * @param userId
+     * @param settle
+     */
+    void saveSettleRedis(String userId, List<Cart> settle);
 
     /**
      * 购物车合并

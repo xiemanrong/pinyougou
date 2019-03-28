@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.pinyougou.cart.Cart;
 import com.pinyougou.common.util.CookieUtils;
+import com.pinyougou.pojo.OrderItem;
 import com.pinyougou.service.CartService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +33,73 @@ public class CartController {
     @Reference(timeout = 10000)
     private CartService cartService;
 
+    @GetMapping("/findOrder")
+    public List<Cart> findOrder(String ids){
+        // 获取商品id数组
+        String[] itemIds = ids.split(",");
+
+        // 获取登录用户名
+        String userId = request.getRemoteUser();
+
+        // 购物集合
+        List<Cart> carts = new ArrayList<>();
+        // 定义购物车对象封装用户选中的商品
+        List<Cart> settle = new ArrayList<>();
+        // 定义购物车对象封装用户未选中的商品
+        List<Cart> unCarts = new ArrayList<>();
+
+        // 判断用户是否登录
+        if (StringUtils.isNoneBlank(userId)){ // 已登录
+            /** ####### 已登录的用户从Redis中获取购物车 ######## */
+            carts = cartService.findCartRedis(userId);
+
+            /** ############# 购物车合并 ################ */
+            // 获取Cookie中的购物车数据
+            String cartJsonStr = CookieUtils.getCookieValue(request,
+                    CookieUtils.CookieName.PINYOUGOU_CART, true);
+            if (StringUtils.isNoneBlank(cartJsonStr)){
+                // 代表Cookie中的购物车不是空 [{},{}]
+                List<Cart> cookieCarts = JSON.parseArray(cartJsonStr, Cart.class);
+                if (cookieCarts.size() > 0){
+                    // 调用服务接口合并购物车
+                    carts = cartService.mergeCart(cookieCarts, carts);
+                    // 删除Cookie中购物车
+                    CookieUtils.deleteCookie(request,response,
+                            CookieUtils.CookieName.PINYOUGOU_CART);
+                }
+            }
+            // 获取用户选中的商品与未选中的商品
+            for (Cart cart : carts) {
+                for (OrderItem orderItem : cart.getOrderItems()) {
+                    for (String itemId : itemIds) {
+                        // 根据商品id判断用户是否选中该商品
+                        if (orderItem.getItemId().equals(itemId)) {
+                            settle.add(cart);
+                        } else {
+                            unCarts.add(cart);
+                            System.out.println();
+                        }
+                    }
+                }
+            }
+            // 把用户未选中的购物车数据重新存储到Redis
+            cartService.saveCartRedis(userId, unCarts);
+            // 把用户选中的购物车数据重新存储到Redis
+            cartService.saveSettleRedis(userId, settle);
+
+        }else{ // 未登录
+            /** ####### 未登录的用户从Cookie中获取购物车 ######## */
+            // 把List<Cart> 转化成json字符串 [{},{}]
+            String cartJsonStr = CookieUtils.getCookieValue(request,
+                    CookieUtils.CookieName.PINYOUGOU_CART, true);
+            if (StringUtils.isBlank(cartJsonStr)){
+                // 创建新的购物车
+                cartJsonStr = "[]";
+            }
+            settle = JSON.parseArray(cartJsonStr, Cart.class);
+        }
+        return settle;
+    }
 
     /** 把SKU商品添加到购物车 */
     @GetMapping("/addCart")
@@ -118,6 +187,5 @@ public class CartController {
             carts = JSON.parseArray(cartJsonStr, Cart.class);
         }
         return carts;
-
     }
 }

@@ -167,13 +167,26 @@ public class CartServiceImpl implements CartService {
     }
 
     /**
-     * 把用户的购物车存储到Redis数据库
+     * 把用户未选中的购物车数据重新存储到Redis
      * @param userId 用户id
      * @param carts 购物车集合
      */
     public void saveCartRedis(String userId, List<Cart> carts){
         try{
             redisTemplate.boundValueOps("cart_" + userId).set(carts);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * 把用户选中的购物车数据重新存储到Redis
+     * @param userId 用户id
+     * @param carts 购物车集合
+     */
+    public void saveSettleRedis(String userId, List<Cart> carts){
+        try{
+            redisTemplate.boundValueOps("settle_" + userId).set(carts);
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }
