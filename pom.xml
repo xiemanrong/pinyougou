@@ -2,30 +2,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-		 <modelVersion>4.0.0</modelVersion>
-    <groupId>com.pinyougou</groupId>
-    <artifactId>pinyougou-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>pinyougou-common</module>
-        <module>pinyougou-pojo</module>
-        <module>pinyougou-mapper</module>
-        <module>pinyougou-interface</module>
-        <module>pinyougou-service</module>
-        <module>pinyougou-web</module>
-        <module>pinyougou-solr-util</module>
-    </modules>
-    <packaging>pom</packaging>
-    <name>${project.artifactId}</name>
-		 <!-- aaaaaa -->
-		 <module>pinyougou-common</module>
-        <module>pinyougou-pojo</module>
-        <module>pinyougou-web</module>
-        <module>pinyougou-solr-util</module>
-		啊啊啊啊啊
-		 
-		 
+		  
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.pinyougou</groupId>
     <artifactId>pinyougou-parent</artifactId>
