@@ -5,7 +5,13 @@
 
 		 
 		 <!-- aaaaaa -->
-		 
+		 <module>pinyougou-common</module>
+        <module>pinyougou-pojo</module>
+        <module>pinyougou-mapper</module>
+        <module>pinyougou-interface</module>
+        <module>pinyougou-service</module>
+        <module>pinyougou-web</module>
+        <module>pinyougou-solr-util</module>
 		 
 		 
     <modelVersion>4.0.0</modelVersion>
